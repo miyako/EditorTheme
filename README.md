@@ -14,6 +14,8 @@ $EditorTheme:=cs.EditorTheme.new()
 $EditorTheme.exportToVSCode("MyCustomLightTheme"; "MyCustomDarkTheme")
 ```
 
+<img src="https://github.com/user-attachments/assets/080054f3-8e64-4f28-a479-fd87473ecaf0" width=600 height=auto />
+
 ## remarks
 
 there exists an undocumented constant for `4D.Folder`: 
