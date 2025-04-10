@@ -1,0 +1,301 @@
+{
+	"fontName": "default_font",
+	"fontSize": 12,
+	"4D": {
+		"commands": {
+			"color": "#068C00",
+			"style": {
+				"bold": true,
+				"italic": false,
+				"underline": false
+			}
+		},
+		"comments": {
+			"color": "#535353",
+			"style": {
+				"bold": false,
+				"italic": false,
+				"underline": false
+			}
+		},
+		"constants": {
+			"color": "#4D004D",
+			"style": {
+				"bold": false,
+				"italic": false,
+				"underline": true
+			}
+		},
+		"entity_member": {
+			"color": "#A0806B",
+			"style": {
+				"bold": false,
+				"italic": false,
+				"underline": false
+			}
+		},
+		"errors": {
+			"color": "#FF0000",
+			"style": {
+				"bold": true,
+				"italic": true,
+				"underline": false
+			}
+		},
+		"fields": {
+			"color": "#323232",
+			"style": {
+				"bold": false,
+				"italic": false,
+				"underline": false
+			}
+		},
+		"interprocess_variables": {
+			"color": "#FF0088",
+			"style": {
+				"bold": false,
+				"italic": false,
+				"underline": false
+			}
+		},
+		"keywords": {
+			"color": "#034D00",
+			"style": {
+				"bold": true,
+				"italic": false,
+				"underline": false
+			}
+		},
+		"local_variables": {
+			"color": "#0031FF",
+			"style": {
+				"bold": false,
+				"italic": false,
+				"underline": false
+			}
+		},
+		"member": {
+			"color": "#A0806B",
+			"style": {
+				"bold": false,
+				"italic": false,
+				"underline": false
+			}
+		},
+		"memberFunc": {
+			"color": "#5F8E5E",
+			"style": {
+				"bold": false,
+				"italic": true,
+				"underline": false
+			}
+		},
+		"methods": {
+			"color": "#000088",
+			"style": {
+				"bold": true,
+				"italic": true,
+				"underline": false
+			}
+		},
+		"parameters": {
+			"color": "#000B76",
+			"style": {
+				"bold": true,
+				"italic": false,
+				"underline": false
+			}
+		},
+		"plain_text": {
+			"color": "#000000",
+			"style": {
+				"bold": false,
+				"italic": false,
+				"underline": false
+			}
+		},
+		"plug_ins": {
+			"color": "#000000",
+			"style": {
+				"bold": true,
+				"italic": true,
+				"underline": false
+			}
+		},
+		"process_variables": {
+			"color": "#0000FF",
+			"style": {
+				"bold": false,
+				"italic": false,
+				"underline": false
+			}
+		},
+		"tables": {
+			"color": "#532300",
+			"style": {
+				"bold": false,
+				"italic": false,
+				"underline": false
+			}
+		}
+	},
+	"JSON": {
+		"errors": {
+			"color": "#000000",
+			"style": {
+				"bold": false,
+				"italic": false,
+				"underline": false
+			}
+		},
+		"escapeSequences": {
+			"color": "#F0AD71",
+			"style": {
+				"bold": false,
+				"italic": false,
+				"underline": false
+			}
+		},
+		"identifiers": {
+			"color": "#0031FF",
+			"style": {
+				"bold": false,
+				"italic": false,
+				"underline": false
+			}
+		},
+		"keywords": {
+			"color": "#034D00",
+			"style": {
+				"bold": true,
+				"italic": false,
+				"underline": false
+			}
+		},
+		"normal": {
+			"color": "#000000",
+			"style": {
+				"bold": false,
+				"italic": false,
+				"underline": false
+			}
+		},
+		"numbers": {
+			"color": "#5F2A5E",
+			"style": {
+				"bold": true,
+				"italic": false,
+				"underline": false
+			}
+		},
+		"strings": {
+			"color": "#A0806B",
+			"style": {
+				"bold": false,
+				"italic": false,
+				"underline": false
+			}
+		}
+	},
+	"SQL": {
+		"comparisons": {
+			"color": "#000000",
+			"style": {
+				"bold": false,
+				"italic": false,
+				"underline": false
+			}
+		},
+		"debug": {
+			"color": "#000000",
+			"style": {
+				"bold": false,
+				"italic": false,
+				"underline": false
+			}
+		},
+		"function_keywords": {
+			"color": "#000000",
+			"style": {
+				"bold": false,
+				"italic": false,
+				"underline": false
+			}
+		},
+		"keywords": {
+			"color": "#034D00",
+			"style": {
+				"bold": true,
+				"italic": false,
+				"underline": false
+			}
+		},
+		"names": {
+			"color": "#000000",
+			"style": {
+				"bold": false,
+				"italic": false,
+				"underline": false
+			}
+		},
+		"normal": {
+			"color": "#191919",
+			"style": {
+				"bold": true,
+				"italic": false,
+				"underline": false
+			}
+		},
+		"numbers": {
+			"color": "#000000",
+			"style": {
+				"bold": false,
+				"italic": false,
+				"underline": false
+			}
+		},
+		"strings": {
+			"color": "#000000",
+			"style": {
+				"bold": false,
+				"italic": false,
+				"underline": false
+			}
+		}
+	},
+	"otherStyles": {
+		"back_color": {
+			"color": "#FFFFFF"
+		},
+		"cursor_line_back_color": {
+			"color": "#F2F2F2"
+		},
+		"cursor_line_color": {
+			"color": "#E8F2FE"
+		},
+		"execution_line_back_color": {
+			"color": "#ABBFFE"
+		},
+		"execution_line_frame_color": {
+			"color": "#4073F4"
+		},
+		"hilite_back_color": {
+			"color": "#FFFF00"
+		},
+		"hilite_block_back_color": {
+			"color": "#F5F5FA"
+		},
+		"matching_parenthesis_color": {
+			"color": "#5EACAE"
+		},
+		"same_word_back_color": {
+			"color": "#CCCCCC"
+		},
+		"suggestion_color": {
+			"color": "#969696"
+		},
+		"selection_back_color": {
+			"color":"#A5D4EA"
+		}
+	}
+}
