@@ -5,3 +5,11 @@
 
 # EditorTheme
 Convert 4D editor theme to 3rd party code editor theme
+
+## remarks
+
+there exists an undocumented constant for `4D.Folder`: 
+
+```4d
+Folder(fk editor theme folder)
+```
