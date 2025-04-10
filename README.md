@@ -13,3 +13,15 @@ there exists an undocumented constant for `4D.Folder`:
 ```4d
 Folder(fk editor theme folder)
 ```
+
+there are some unsused? language properties 
+
+for `4D`
+
+* indexed-fields
+* thread-safe-commands
+* thread-safe-methods
+
+for `otherStyles`
+
+* protected_color
