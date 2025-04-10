@@ -6,6 +6,19 @@
 # EditorTheme
 Convert 4D editor theme to 3rd party code editor theme
 
+## dependencies.json
+
+ ```json
+{
+	"dependencies": {
+		"EditorTheme": {
+			"github": "miyako/EditorTheme",
+			"version": "latest"
+		}
+	}
+}
+```
+
 ## usage
 
 ```4d
