@@ -19,7 +19,7 @@ Convert 4D editor theme to 3rd party code editor theme
 }
 ```
 
-## usage
+## [usage](https://github.com/miyako/EditorTheme/blob/main/EditorTheme/Documentation/Classes/EditorTheme.md)
 
 ```4d
 var $EditorTheme : cs.EditorTheme.EditorTheme
