@@ -1,10 +1,24 @@
 # _EditorTheme
 
+## .currentEditorThemeName()
+
+**.currentEditorThemeName**() : Text
+
+The current active theme name. Takes into account the platform and appearance.
+
 ## .exportToVSCode()
 
-**.exportToVSCode()**($lightTheme : Text; $darkTheme : Text) : cs._EditorTheme
+**.exportToVSCode**() : cs._EditorTheme  
+**.exportToVSCode**($lightTheme : Text) : cs._EditorTheme  
+**.exportToVSCode**($lightTheme : Text; $darkTheme : Text) : cs._EditorTheme
 
 Convert and export editor themes to VS Code settings file.
+
+When no themes are specified, the current editor themes are used.
+
+The current theme is applied to the active VS Code theme (`workbench.colorTheme`).
+
+The light and dark themes are applied to `Default Light+` and `Default Dark+`.
 
 ## .exportToFile()
 
@@ -20,12 +34,12 @@ On success, the `.zip` file is returned.
 
 ## .allThemes()
 
-**.allThemes()** : Collection
+**.allThemes**() : Collection
 
 Theme with `__inheritedFrom__` unresolved. The parent theme might also have inheritance.
 
 ## .allThemesExpanded()
 
-**.allThemesExpanded()** : Collection
+**.allThemesExpanded**() : Collection
 
 Theme with `__inheritedFrom__` resolved.

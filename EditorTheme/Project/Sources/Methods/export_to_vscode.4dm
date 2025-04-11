@@ -2,7 +2,16 @@
 var $EditorTheme : cs:C1710.EditorTheme
 $EditorTheme:=cs:C1710.EditorTheme.new()
 
-$names:=$EditorTheme.allThemes().extract("name")
+Case of 
+	: (True:C214)
+		$EditorTheme.exportToVSCode()
+	: (False:C215)
+		$EditorTheme.exportToVSCode("MyCustomLight")
+	: (False:C215)
+		$EditorTheme.exportToVSCode("MyCustomLight"; "MyCustomDark")
+End case 
 
-//$EditorTheme.exportToVSCode("defaultTheme"; "defaultDarkTheme")
-$EditorTheme.exportToVSCode("custom"; "custom_1")
+//utilities
+$lightTheme:=$EditorTheme.currentEditorThemeNameLight()
+$darkTheme:=$EditorTheme.currentEditorThemeNameDark()
+$currentTheme:=$EditorTheme.currentEditorThemeName()

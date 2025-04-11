@@ -1,10 +1,10 @@
 property defaultThemesFolder : 4D:C1709.Folder
 property defaultThemes : Collection
 property editorThemes : Collection
-property themes : Collection  //resolve inheritence
 property themeSchema : Object
 property VSCodeSettings : Object
 property VSCodeSettingsFile : 4D:C1709.File
+property preferencesFile : 4D:C1709.File
 
 Class constructor
 	
@@ -29,6 +29,96 @@ Class constructor
 	This:C1470._VSCodeSettingsFile:=Folder:C1567(fk user preferences folder:K87:10).parent.file("Code/User/settings.json")
 	
 	This:C1470._loadDefaultThemes()._loadEditorThemes()._loadVSCodeSettings()
+	
+	var $version; $fileName : Text
+	$version:=Application version:C493
+	$fileName:="4D Preferences v"+Substring:C12($version; 1; 2)+".4DPreferences"
+	
+	This:C1470._preferencesFile:=Folder:C1567(fk user preferences folder:K87:10).file($fileName)
+	
+	//MARK: preferences
+	
+Function currentEditorThemeName() : Text
+	
+	var $color_scheme_name : Text
+	
+	var $file : 4D:C1709.File
+	$file:=This:C1470._preferencesFile
+	
+	If ($file.exists)
+		var $dom : Text
+		$dom:=DOM Parse XML source:C719($file.platformPath)
+		If (OK=1)
+			$general:=DOM Find XML element:C864($dom; "/preferences/com.4d/general[@color_scheme]")
+			If (OK=1)
+				var $color_scheme : Text
+				DOM GET XML ATTRIBUTE BY NAME:C728($general; "color_scheme"; $color_scheme)
+				Case of 
+					: (Is Windows:C1573)
+						$color_scheme:="light"
+					: ($color_scheme="inherited")
+						$color_scheme:=Get Application color scheme:C1763(*)
+				End case 
+				If ($color_scheme="inherited")
+					$color_scheme:=This:C1470._isSystemDarkMode() ? "dark" : "light"
+				End if 
+				$theme:=DOM Find XML element:C864($dom; "/preferences/com.4d/method_editor/theme[@"+$color_scheme+"]")
+				If (OK=1)
+					DOM GET XML ATTRIBUTE BY NAME:C728($theme; $color_scheme; $color_scheme_name)
+				End if 
+			End if 
+			DOM CLOSE XML:C722($dom)
+		End if 
+	End if 
+	
+	return $color_scheme_name
+	
+Function _currentEditorThemeName($color_scheme : Text) : Text
+	
+	var $color_scheme_name : Text
+	
+	var $file : 4D:C1709.File
+	$file:=This:C1470._preferencesFile
+	
+	If ($file.exists)
+		var $dom : Text
+		$dom:=DOM Parse XML source:C719($file.platformPath)
+		If (OK=1)
+			$theme:=DOM Find XML element:C864($dom; "/preferences/com.4d/method_editor/theme[@"+$color_scheme+"]")
+			If (OK=1)
+				DOM GET XML ATTRIBUTE BY NAME:C728($theme; $color_scheme; $color_scheme_name)
+			End if 
+		End if 
+		DOM CLOSE XML:C722($dom)
+	End if 
+	
+	return $color_scheme_name
+	
+Function currentEditorThemeNameLight() : Text
+	
+	return This:C1470._currentEditorThemeName("light")
+	
+Function currentEditorThemeNameDark() : Text
+	
+	return This:C1470._currentEditorThemeName("dark")
+	
+	//MARK: preferences subroutines
+	
+Function _isSystemDarkMode() : Boolean
+	
+	If (Is Windows:C1573)
+		return False:C215
+	End if 
+	
+	$command:="defaults read -g AppleInterfaceStyle"
+	var $stdIn; $stdOut; $stdErr : Text
+	LAUNCH EXTERNAL PROCESS:C811($command; $stdIn; $stdOut; $stdErr)
+	
+	If ($stdOut="")
+		return False:C215
+	End if 
+	
+	return True:C214
 	
 	//MARK: export
 	
@@ -59,6 +149,10 @@ Function exportToFile($folder : 4D:C1709.Folder) : 4D:C1709.File
 	
 Function exportToVSCode($lightTheme : Text; $darkTheme : Text) : cs:C1710.EditorTheme
 	
+	$lightTheme:=($lightTheme="") ? This:C1470.currentEditorThemeNameLight() : $lightTheme
+	$darkTheme:=($darkTheme="") ? This:C1470.currentEditorThemeNameDark() : $darkTheme
+	$currentTheme:=This:C1470.currentEditorThemeName()
+	
 	var $theme : Object
 	var $settings; $node : Object
 	$settings:=This:C1470.VSCodeSettings
@@ -66,13 +160,26 @@ Function exportToVSCode($lightTheme : Text; $darkTheme : Text) : cs:C1710.Editor
 	var $allThemes : Collection
 	$allThemes:=This:C1470.allThemesExpanded()
 	
+	var $colorTheme : Text
 	If ($settings#Null:C1517)
+		If ($settings["workbench.colorTheme"]#Null:C1517)
+			$colorTheme:=$settings["workbench.colorTheme"]
+		End if 
 		$node:=$settings["editor.semanticTokenColorCustomizations"]
 		If ($node#Null:C1517)
+			//active theme
+			If ($colorTheme#"")
+				$theme:=$allThemes.query("name == :1"; $currentTheme).first()
+				If ($theme#Null:C1517)
+					$node["["+$colorTheme+"]"]:=This:C1470._convertToVSCodeTheme($theme.theme)
+				End if 
+			End if 
+			//light theme
 			$theme:=$allThemes.query("name == :1"; $lightTheme).first()
 			If ($theme#Null:C1517)
 				$node["[Default Light+]"]:=This:C1470._convertToVSCodeTheme($theme.theme)
 			End if 
+			//dark theme
 			$theme:=$allThemes.query("name == :1"; $darkTheme).first()
 			If ($theme#Null:C1517)
 				$node["[Default Dark+]"]:=This:C1470._convertToVSCodeTheme($theme.theme)
@@ -147,6 +254,10 @@ Function _newFile($folder : 4D:C1709.Folder; $name : Text; $extension : Text) : 
 	return $file
 	
 	//MARK: read only properties
+	
+Function get preferencesFile : 4D:C1709.File
+	
+	return This:C1470._preferencesFile
 	
 Function get VSCodeSettings() : Object
 	
