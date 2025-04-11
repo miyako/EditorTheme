@@ -49,22 +49,28 @@ Function currentEditorThemeName() : Text
 		var $dom : Text
 		$dom:=DOM Parse XML source:C719($file.platformPath)
 		If (OK=1)
-			$general:=DOM Find XML element:C864($dom; "/preferences/com.4d/general[@color_scheme]")
+			$theme:=DOM Find XML element:C864($dom; "/preferences/com.4d/method_editor/theme[@light]")
 			If (OK=1)
-				var $color_scheme : Text
-				DOM GET XML ATTRIBUTE BY NAME:C728($general; "color_scheme"; $color_scheme)
-				Case of 
-					: (Is Windows:C1573)
-						$color_scheme:="light"
-					: ($color_scheme="inherited")
-						$color_scheme:=Get Application color scheme:C1763(*)
-				End case 
-				If ($color_scheme="inherited")
-					$color_scheme:=This:C1470._isSystemDarkMode() ? "dark" : "light"
-				End if 
-				$theme:=DOM Find XML element:C864($dom; "/preferences/com.4d/method_editor/theme[@"+$color_scheme+"]")
+				DOM GET XML ATTRIBUTE BY NAME:C728($theme; "light"; $color_scheme_name)
+			End if 
+			If (Is macOS:C1572)
+				$general:=DOM Find XML element:C864($dom; "/preferences/com.4d/general[@color_scheme]")
 				If (OK=1)
-					DOM GET XML ATTRIBUTE BY NAME:C728($theme; $color_scheme; $color_scheme_name)
+					var $color_scheme : Text
+					DOM GET XML ATTRIBUTE BY NAME:C728($general; "color_scheme"; $color_scheme)
+					Case of 
+						: (Is Windows:C1573)
+							$color_scheme:="light"
+						: ($color_scheme="inherited")
+							$color_scheme:=Get Application color scheme:C1763(*)
+					End case 
+					If ($color_scheme="inherited")
+						$color_scheme:=This:C1470._isSystemDarkMode() ? "dark" : "light"
+					End if 
+					$theme:=DOM Find XML element:C864($dom; "/preferences/com.4d/method_editor/theme[@"+$color_scheme+"]")
+					If (OK=1)
+						DOM GET XML ATTRIBUTE BY NAME:C728($theme; $color_scheme; $color_scheme_name)
+					End if 
 				End if 
 			End if 
 			DOM CLOSE XML:C722($dom)
