@@ -1,6 +1,7 @@
 property defaultThemesFolder : 4D:C1709.Folder
 property defaultThemes : Collection
 property editorThemes : Collection
+property themes : Collection
 property themeSchema : Object
 property VSCodeSettings : Object
 property VSCodeSettingsFile : 4D:C1709.File
@@ -22,11 +23,11 @@ Class constructor
 		$defaultThemesFolder:=Folder:C1567("/RESOURCES/EditorTheme")
 	End if 
 	
+	//%W-550.26
 	This:C1470._defaultThemesFolder:=$defaultThemesFolder
-	
 	This:C1470._themeSchema:=JSON Parse:C1218(File:C1566("/RESOURCES/JSONSchemas/themeSchema.json").getText())
-	
 	This:C1470._VSCodeSettingsFile:=Folder:C1567(fk user preferences folder:K87:10).parent.file("Code/User/settings.json")
+	//%W+550.26
 	
 	This:C1470._loadDefaultThemes()._loadEditorThemes()._loadVSCodeSettings()
 	
@@ -34,7 +35,9 @@ Class constructor
 	$version:=Application version:C493
 	$fileName:="4D Preferences v"+Substring:C12($version; 1; 2)+".4DPreferences"
 	
+	//%W-550.26
 	This:C1470._preferencesFile:=Folder:C1567(fk user preferences folder:K87:10).file($fileName)
+	//%W+550.26
 	
 	//MARK: preferences
 	
@@ -43,7 +46,7 @@ Function currentEditorThemeName() : Text
 	var $color_scheme_name : Text
 	
 	var $file : 4D:C1709.File
-	$file:=This:C1470._preferencesFile
+	$file:=This:C1470.preferencesFile
 	
 	If ($file.exists)
 		var $dom : Text
@@ -84,7 +87,8 @@ Function _currentEditorThemeName($color_scheme : Text) : Text
 	var $color_scheme_name : Text
 	
 	var $file : 4D:C1709.File
-	$file:=This:C1470._preferencesFile
+	
+	$file:=This:C1470.preferencesFile
 	
 	If ($file.exists)
 		var $dom : Text
@@ -267,39 +271,63 @@ Function _newFile($folder : 4D:C1709.Folder; $name : Text; $extension : Text) : 
 	
 Function get preferencesFile : 4D:C1709.File
 	
+	//%W-550.26
 	return This:C1470._preferencesFile
+	//%W+550.26
 	
 Function get VSCodeSettings() : Object
 	
+	//%W-550.26
 	return This:C1470._VSCodeSettings
+	//%W+550.26
 	
 Function get VSCodeSettingsFile() : 4D:C1709.File
 	
+	//%W-550.26
 	return This:C1470._VSCodeSettingsFile
+	//%W+550.26
 	
 Function get defaultThemesFolder() : 4D:C1709.Folder
 	
+	//%W-550.26
 	return This:C1470._defaultThemesFolder
+	//%W+550.26
 	
 Function get themeSchema() : Object
 	
+	//%W-550.26
 	return This:C1470._themeSchema
+	//%W+550.26
 	
 Function get defaultThemes() : Collection
 	
+	//%W-550.26
 	return This:C1470._defaultThemes
+	//%W+550.26
 	
 Function get editorThemes() : Collection
 	
-	return This:C1470.EditorThemes
+	//%W-550.26
+	return This:C1470._editorThemes
+	//%W+550.26
+	
+Function get themes() : Collection
+	
+	//%W-550.26
+	return This:C1470._themes
+	//%W+550.26
 	
 Function allThemes() : Collection
 	
-	return This:C1470._defaultThemes.copy().combine(This:C1470.EditorThemes)
+	//%W-550.26
+	return This:C1470.defaultThemes.copy().combine(This:C1470.editorThemes)
+	//%W+550.26
 	
 Function allThemesExpanded() : Collection
 	
-	return This:C1470._defaultThemes.copy().combine(This:C1470._themes)
+	//%W-550.26
+	return This:C1470.defaultThemes.copy().combine(This:C1470.themes)
+	//%W+550.26
 	
 	//MARK: constructor subroutines
 	
@@ -326,13 +354,17 @@ Function _getThemes($folder : 4D:C1709.Folder) : Collection
 	
 Function _loadDefaultThemes() : cs:C1710.EditorTheme
 	
+	//%W-550.26
 	This:C1470._defaultThemes:=This:C1470._getThemes(This:C1470._defaultThemesFolder)
+	//%W+550.26
 	
 	return This:C1470
 	
 Function _loadEditorThemes() : cs:C1710.EditorTheme
 	
-	This:C1470.EditorThemes:=This:C1470._getThemes(Folder:C1567(fk editor theme folder:K87:23))
+	//%W-550.26
+	This:C1470._editorThemes:=This:C1470._getThemes(Folder:C1567(fk editor theme folder:K87:23))
+	//%W+550.26
 	
 	var $theme : Object
 	var $themes : Collection
@@ -342,7 +374,9 @@ Function _loadEditorThemes() : cs:C1710.EditorTheme
 		$themes.push({name: $theme.name; theme: This:C1470._expand($theme.theme)})
 	End for each 
 	
+	//%W-550.26
 	This:C1470._themes:=$themes
+	//%W+550.26
 	
 	return This:C1470
 	
@@ -350,11 +384,13 @@ Function _loadVSCodeSettings() : cs:C1710.EditorTheme
 	
 	var $settings : Object
 	
-	If (This:C1470._VSCodeSettingsFile.exists)
-		$settings:=JSON Parse:C1218(This:C1470._VSCodeSettingsFile.getText(); Is object:K8:27)
+	If (This:C1470.VSCodeSettingsFile.exists)
+		$settings:=JSON Parse:C1218(This:C1470.VSCodeSettingsFile.getText(); Is object:K8:27)
 	End if 
 	
+	//%W-550.26
 	This:C1470._VSCodeSettings:=$settings
+	//%W+550.26
 	
 	return This:C1470
 	
@@ -374,6 +410,8 @@ Function _expand($theme : Object) : Object
 		$defaultTheme:=$allThemes.query("name == :1"; $__inheritedFrom__).first()
 		If ($defaultTheme#Null:C1517)
 			$theme:=cs:C1710._Theme.new($theme; $defaultTheme.theme)
+		Else 
+			break
 		End if 
 	End while 
 	

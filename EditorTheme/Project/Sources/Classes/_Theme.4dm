@@ -1,3 +1,10 @@
+property __inheritedFrom__ : Object
+property SQL : Object
+property JSON : Object
+property otherStyles : Object
+property fontName : Text
+property fontSize : Integer
+
 Class constructor($theme : Object; $superTheme : Object)
 	
 	If ($theme=Null:C1517)
