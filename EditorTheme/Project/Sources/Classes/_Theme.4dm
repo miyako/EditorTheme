@@ -117,6 +117,9 @@ Function _setup($scope : Text; $properties : Collection; $theme : Object; $super
 	
 	var $property : Text
 	For each ($property; $properties)
+		If ($target[$property]#Null:C1517)
+			continue
+		End if 
 		If ($source[$property]#Null:C1517)
 			$target[$property]:=$source[$property]
 			continue
@@ -125,15 +128,4 @@ Function _setup($scope : Text; $properties : Collection; $theme : Object; $super
 			$target[$property]:=$superSource[$property]
 			continue
 		End if 
-		Case of 
-			: ($scope="otherStyles")
-				//$target[$property]:={color: "#000000"}
-			Else 
-				//$target[$property]:={color: "#000000"; style: {bold: False; italic: False; underline: False}}
-		End case 
-/*
-the following properties seems to be on the cutting floor
-4D:indexed-fields,thread-safe-commands,thread-safe-methods
-otherStyles:protected_color
-*/
 	End for each 
