@@ -77,7 +77,7 @@ Function currentEditorThemeName() : Text
 		End if 
 	End if 
 	
-	return $color_scheme_name
+	return This:C1470._trim($color_scheme_name)
 	
 Function _currentEditorThemeName($color_scheme : Text) : Text
 	
@@ -98,7 +98,7 @@ Function _currentEditorThemeName($color_scheme : Text) : Text
 		DOM CLOSE XML:C722($dom)
 	End if 
 	
-	return $color_scheme_name
+	return This:C1470._trim($color_scheme_name)
 	
 Function currentEditorThemeNameLight() : Text
 	
@@ -317,7 +317,7 @@ Function _getThemes($folder : 4D:C1709.Folder) : Collection
 		If ($theme#Null:C1517)
 			$status:=JSON Validate:C1456($theme; This:C1470.themeSchema)
 			If ($status.success)
-				$themes.push({name: $file.name; theme: $theme; file: $file})
+				$themes.push({name: This:C1470._trim($file.name); theme: $theme; file: $file})
 			End if 
 		End if 
 	End for each 
@@ -358,6 +358,17 @@ Function _loadVSCodeSettings() : cs:C1710.EditorTheme
 	
 	return This:C1470
 	
+Function _trim($in : Text) : Text
+	
+	ARRAY LONGINT:C221($pos; 0)
+	ARRAY LONGINT:C221($len; 0)
+	
+	If (Match regex:C1019("\\s*(.+)\\s*"; $in; 1; $pos; $len))
+		return Substring:C12($in; $pos{1}; $len{1})
+	End if 
+	
+	return $in
+	
 Function _expand($theme : Object) : Object
 	
 	If ($theme=Null:C1517)
@@ -369,7 +380,7 @@ Function _expand($theme : Object) : Object
 	
 	While ($theme.__inheritedFrom__#Null:C1517)
 		var $__inheritedFrom__ : Text
-		$__inheritedFrom__:=$theme.__inheritedFrom__
+		$__inheritedFrom__:=This:C1470._trim($theme.__inheritedFrom__)
 		var $defaultTheme : Object
 		$defaultTheme:=$allThemes.query("name == :1"; $__inheritedFrom__).first()
 		If ($defaultTheme#Null:C1517)
