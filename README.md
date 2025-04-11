@@ -22,9 +22,22 @@ Convert 4D editor theme to 3rd party code editor theme
 ## usage
 
 ```4d
-var $EditorTheme : cs.EditorTheme.EditorTheme
-$EditorTheme:=cs.EditorTheme.EditorTheme.new()
-$EditorTheme.exportToVSCode("MyCustomLightTheme"; "MyCustomDarkTheme")
+var $EditorTheme : cs.EditorTheme
+$EditorTheme:=cs.EditorTheme.new()
+
+Case of 
+	: (True)
+		$EditorTheme.exportToVSCode()
+	: (False)
+		$EditorTheme.exportToVSCode("MyCustomLight")
+	: (False)
+		$EditorTheme.exportToVSCode("MyCustomLight"; "MyCustomDark")
+End case 
+
+//utilities
+$lightTheme:=$EditorTheme.currentEditorThemeNameLight()
+$darkTheme:=$EditorTheme.currentEditorThemeNameDark()
+$currentTheme:=$EditorTheme.currentEditorThemeName()
 ```
 
 <img src="https://github.com/user-attachments/assets/080054f3-8e64-4f28-a479-fd87473ecaf0" width=600 height=auto />
