@@ -120,9 +120,9 @@ Function _setup($scope : Text; $properties : Collection; $theme : Object; $super
 		End if 
 		Case of 
 			: ($scope="otherStyles")
-				$target[$property]:={color: "#000000"}
+				//$target[$property]:={color: "#000000"}
 			Else 
-				$target[$property]:={color: "#000000"; style: {bold: False:C215; italic: False:C215; underline: False:C215}}
+				//$target[$property]:={color: "#000000"; style: {bold: False; italic: False; underline: False}}
 		End case 
 /*
 the following properties seems to be on the cutting floor

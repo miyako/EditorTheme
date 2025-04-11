@@ -172,6 +172,10 @@ Function exportToVSCode($lightTheme : Text; $darkTheme : Text) : cs:C1710.Editor
 			$colorTheme:=$settings["workbench.colorTheme"]
 		End if 
 		$node:=$settings["editor.semanticTokenColorCustomizations"]
+		If ($node=Null:C1517)
+			$node:={}
+			$settings["editor.semanticTokenColorCustomizations"]:=$node
+		End if 
 		If ($node#Null:C1517)
 			//active theme
 			If ($colorTheme#"")
@@ -365,9 +369,9 @@ Function _expand($theme : Object) : Object
 	
 	While ($theme.__inheritedFrom__#Null:C1517)
 		var $__inheritedFrom__ : Text
-		$__inheritedFrom:=$theme.__inheritedFrom__
-		var $theme; $defaultTheme : Object
-		$defaultTheme:=$allThemes.query("name == :1"; $__inheritedFrom).first()
+		$__inheritedFrom__:=$theme.__inheritedFrom__
+		var $defaultTheme : Object
+		$defaultTheme:=$allThemes.query("name == :1"; $__inheritedFrom__).first()
 		If ($defaultTheme#Null:C1517)
 			$theme:=cs:C1710._Theme.new($theme; $defaultTheme.theme)
 		End if 
